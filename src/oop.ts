@@ -126,3 +126,160 @@ workers[0] = new Employees("Jhon")
 workers[1] = new Contractor("Morph")
 
 workers.forEach(worker => worker.promote(5))
+
+interface Product {
+  id: number
+  description: string
+}
+
+interface ProductProperties {
+  id?: number
+  description?: string
+}
+
+class ProductService {
+// для перегрузки методов мы сначала их просто объявляем а только потом реализуем. Bопросительный знак объявляет, что аргумент опционален
+  
+  id: number
+  description: string
+
+  constructor()
+  constructor(id: number)
+  constructor(id: number, description: string)
+  constructor(id?: number, description?: string) {
+
+  }
+  // или 
+  // constructor(properties?: ProductProperties) {}
+  
+  getProducts(description: string): Product[]
+  // getProducts(): void
+  getProducts(id: number): Product
+
+  getProducts(product: number | string): Product[] | Product {
+    if (typeof product === "number") {
+      console.log(`Getting the product info for id ${product}`)
+      return { id: product, description: 'greet product' }
+    } else if (typeof product === "string") {
+      console.log(`Getting product with description ${product}`)
+      return [{ id: 123, description: 'blue jeans' },
+              { id: 789, description: 'blue jeans' }]
+    } else {
+      return { id: -1, description: 'Error: getProducts() accept only number or string as args' }
+    }
+  }
+}
+
+const prodService = new ProductService()
+prodService.getProducts(123)
+prodService.getProducts('blue jeans')
+
+// Интерфейсы
+
+
+// Объявляет сигнатуру метода,
+// который должен быть реализован
+// классом
+// интерфейс обеспечивает выполнение определенного контракта
+// то есть класс обязан объявить методы из интерфейса
+// а дальше может и своего чего-нибудь сделать
+interface MotorVehicle {
+  startEngine(): boolean
+  stopEngine(): boolean
+  brake(): boolean
+  accelerate(speed: number): void
+  honk(howLong: number): void
+}
+
+// Bond... James Bond
+
+interface Flyable {
+  fly(howHigh: number)
+  land()
+}
+interface Swimmable {
+  swim(howFar: number)
+}
+
+class Car implements MotorVehicle {
+  startEngine(): boolean {
+    return true;
+  }
+  stopEngine(): boolean{
+    return true;
+  }
+  brake(): boolean {
+    return true;
+  }
+  accelerate(speed: number): void {
+    console.log(`Driving faster`);
+  }
+  honk(howLong: number): void {
+    console.log(`Beep beep yeah!`);
+  }
+}
+
+class SecretServiceCar extends Car implements Flyable, Swimmable {
+  fly(howHigh: number) {
+    console.log(`Go to ${howHigh}`)
+  }
+  land() {
+    console.log('Fly to..')
+  }
+  swim(howFar: number) {
+    console.log(`Deeper to ${howFar}`)
+  }
+}
+
+/*
+можно также использовать расширение интерфейсов
+
+interface Flyable extends MotorVehicle {
+  fly(howHigh: number)
+  land()
+}
+
+даже если Swimmable также будет расширять MotorVehicle, компи-
+лятор TypeScript не станет ругаться
+
+class SecretServiceCar implements Flyable, Swimmable {
+
+  Реализует метод из MotorVehicle
+
+  startEngine(): boolean {
+    return true
+  }
+  stopEngine(): boolean {
+    return true
+  }
+  brake(): boolean {
+    return true
+  }
+  accelerate(speed: number) {
+    console.log(`Driving faster`)
+  }
+
+  honk(howLong: number): void {
+    console.log(`Beep beep yeah!`)
+  }
+
+  Реализует метод из Flyable
+
+  fly(howHigh: number) {
+    console.log(`Flying ${howHigh} feet high`)
+  }
+
+  land() { 
+    console.log(`Landing. Fasten your belts.`);
+  }
+
+  Реализует метод из Swimmable
+
+  swim(howFar: number) {
+    console.log(`Swimming ${howFar} feet`);
+  }
+}
+*/
+
+const car = new Car()
+car.startEngine()
