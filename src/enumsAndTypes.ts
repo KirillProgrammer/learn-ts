@@ -26,6 +26,7 @@ function convertTemperature(temp: number, fromTo: Direction): number {
 
 console.log(`70F is ${convertTemperature(70, Direction.FtoC)}`);
 console.log(`21C is ${convertTemperature(21, Direction.CtoF)}`);
+console.log(`Wtf where is my autocomplete`)
 
 enum strDirections {
   Up = "UP",
@@ -193,3 +194,26 @@ switch (user.role) {
   case UserRole.Administrator: console.log("Show control panel"); break;
   case UserRole.Manager: console.log("Hide control panel"); break;
 }
+
+
+// Функции высшего порядка
+
+const outerFunc = (someValue: number) => 
+                  (multiple: number) => someValue * multiple;
+
+let innerFunc = outerFunc(10);
+let result = innerFunc(5);
+
+console.log(result);
+
+type numFunc<T> = (arg: T) => (c: number) => number;
+
+const noArgFunc: numFunc<void> = () => (c: number) => c + 5;
+const numArgFunc: numFunc<number> = (someValue: number) => 
+                              (mult: number) => someValue * mult;
+const strArgFunc: numFunc<string> = (someText: string) => 
+                              (padding: number) => someText.length + padding;
+
+// Вызовет ошибку 
+// const createSumString: numFunc<number> = () => (x: number) => 'Hello';
+
