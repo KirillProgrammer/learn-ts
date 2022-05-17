@@ -1,9 +1,11 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "es2017",
     // "useDefineForClassFields": true,
-    "module": "ESNext",
-    "lib": ["ESNext", "DOM"],
+    "module": "commonjs",
+    "lib": [
+      "ES2017",
+    ],
     "moduleResolution": "Node",
     // "strict": true,
     "sourceMap": true,
@@ -13,7 +15,8 @@
     // "noUnusedLocals": true,
     // "noUnusedParameters": true,
     // "noImplicitReturns": true,
-    "outDir": "src/js",
+    "rootDir": "src",
+    "outDir": "./dist",
     "experimentalDecorators": true,
   },
   "include": ["src"]
